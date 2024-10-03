@@ -1,42 +1,39 @@
-
 package universidad.AccesoADatos;
 
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 
 public class Conexion {
-    private static final String URL="jdbc:mysql://localhost/";
-    private static final String DB="universidadGrupo6";
-    private static final String USUARIO="root";
-    private static final String PASSWORD="";
-    
+
+
     private static Connection connection;
 
     public Conexion() {
     }
-    
-    public static Connection getConexion(){
-    
+
+    public static Connection getConexion() {
+
         if (connection == null) {
-           
+
             try {
+                // Cargar el controlador
                 Class.forName("org.mariadb.jdbc.Driver");
-                connection = DriverManager
-                        .getConnection(URL+DB,USUARIO,PASSWORD);
-                JOptionPane.showMessageDialog(null, "Conectado");
-            } catch (ClassNotFoundException ex) {
-                JOptionPane.showMessageDialog(null, "Error al cargar los Driver");
-            } catch (SQLException ex) {
-                JOptionPane.showConfirmDialog(null, "Error al conectarse a la BD");
-            }
-               
-            
+
+                // Establecer la conexión
+                String url = "jdbc:mariadb://localhost:3306/universidadulp";
+                String usuario = "root";
+                String contrasena = "";
+
+                connection = DriverManager.getConnection(url, usuario, contrasena);
+                System.out.println("Conexión exitosa!");
+
+            } catch (ClassNotFoundException e) {
+                System.err.println("Controlador no encontrado: " + e.getMessage());
+            } catch (SQLException e) {
+                System.err.println("Error de conexión: " + e.getMessage());
+            } 
         }
         return connection;
-        
-}
 
+    }
 }
