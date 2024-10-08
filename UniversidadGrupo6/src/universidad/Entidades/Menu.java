@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package universidad.visita;
+package universidad.Entidades;
 
 import java.time.LocalDate;
 import java.util.Scanner;
 import universidad.AccesoADatos.AlumnoData;
-import universidad.Entidades.Alumno;
 
 /**
  *
