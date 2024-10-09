@@ -102,6 +102,11 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
 
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Eliminar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Guardar");
@@ -278,6 +283,20 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
 
 
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       
+        
+        
+        if (!jTFdocumento.getText().isEmpty() && (esDNIValido(jTFdocumento.getText())))
+       {
+           alumnosD.eliminarAlumnoXdni(Integer.parseInt(jTFdocumento.getText()));
+       }
+    }//GEN-LAST:event_jButton2ActionPerformed
+   
+    
+    
+    
     public static boolean esDNIValido(String dni) {
         // Patrón para validar el DNI: 8 dígitos seguidos de una letra
         String regex = "^[0-9]{8,9}$";
