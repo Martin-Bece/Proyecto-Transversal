@@ -5,6 +5,7 @@
  */
 package universidad.visita;
 
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.regex.Pattern;
@@ -99,6 +100,11 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
 
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Nuevo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Eliminar");
@@ -285,22 +291,46 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       
-        
-        
-        if (!jTFdocumento.getText().isEmpty() && (esDNIValido(jTFdocumento.getText())))
-       {
-           alumnosD.eliminarAlumnoXdni(Integer.parseInt(jTFdocumento.getText()));
-       }
+
+        if (!jTFdocumento.getText().isEmpty() && (esDNIValido(jTFdocumento.getText()))) {
+            alumnosD.eliminarAlumnoXdni(Integer.parseInt(jTFdocumento.getText()));
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
-   
-    
-    
-    
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (!chequeo()) {
+
+            Date fechaSeleccionada = jDateChooser1.getDate();
+            LocalDate localDate = fechaSeleccionada.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+
+            alumno = new Alumno(Integer.parseInt(jTFdocumento.getText()), jTFapellido.getText(), jTFnombre.getText(), localDate, true);
+            alumnosD.guardarAlumno(alumno);
+            limpiarCampos();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor complete los campos obligatorios ", "Atencion!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+    public boolean chequeo() {
+
+        return (jTFdocumento.getText().isEmpty() || jTFapellido.getText().isEmpty() || jTFnombre.getText().isEmpty());
+    }
+
     public static boolean esDNIValido(String dni) {
         // Patrón para validar el DNI: 8 dígitos seguidos de una letra
         String regex = "^[0-9]{8,9}$";
         return Pattern.matches(regex, dni);
+    }
+
+    public void limpiarCampos() {
+        jTFapellido.setText("");
+        jTFdocumento.setText("");
+        jTFnombre.setText("");
+        jDateChooser1.setDate(null);
+        jRBactivo.setSelected(false);
+        jRBinactivo.setSelected(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
