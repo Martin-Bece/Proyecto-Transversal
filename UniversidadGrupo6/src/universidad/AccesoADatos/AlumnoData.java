@@ -1,8 +1,4 @@
-
 package universidad.AccesoADatos;
-
-
-
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -21,7 +17,7 @@ public class AlumnoData {
 
     public AlumnoData() {
         con = Conexion.getConexion();
-        int x=0;
+        int x = 0;
     }
 
     public Connection getCon() {
@@ -31,20 +27,19 @@ public class AlumnoData {
     public void guardarAlumno(Alumno alumno) {
         String sql = "INSERT INTO alumno (dni, apellido, nombre, fechaNacimiento, estado) VALUES (?, ?, ?, ?, ?)";
         try {
-            PreparedStatement ps =  getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, alumno.getDni());
             ps.setString(2, alumno.getApellido());
             ps.setString(3, alumno.getNombre());
             ps.setDate(4, Date.valueOf(alumno.getFechaNac())); //localDate a Date
             ps.setBoolean(5, alumno.isActivo());
-           
+
             ps.executeUpdate();
 
             ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) 
-            {
+            if (rs.next()) {
                 alumno.setIdAlumno(rs.getInt(1));   // O usar rs.getInt("idAlumno") esto no me funciono
-               
+
                 JOptionPane.showMessageDialog(null, "Alumno añadido con éxito.");
                 System.out.println("Alumno añadido con éxito.");
             }
@@ -52,6 +47,7 @@ public class AlumnoData {
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno: " + ex.getMessage());
+            System.out.println(ex.getMessage() + "no se permiten Dni repetidos ");
         }
     }
 
@@ -103,8 +99,7 @@ public class AlumnoData {
                 alumno.setNombre(rs.getString("nombre"));
                 alumno.setFechaNac(rs.getDate("fechaNacimiento").toLocalDate());
                 alumno.setActivo(true);
-            } else 
-            {
+            } else {
                 JOptionPane.showMessageDialog(null, "No existe el alumno");
             }
             ps.close();
@@ -144,16 +139,19 @@ public class AlumnoData {
     }
 
     public void modificarAlumno(Alumno alumno) {
-        String sql = "UPDATE alumno SET dni = ?, apellido = ?, nombre = ?, fechaNacimiento = ? WHERE idAlumno = ?";
+
+        String sql = "UPDATE alumno SET apellido = ?, nombre = ?, fechaNacimiento = ?, estado = ? WHERE dni = ?";
+
         PreparedStatement ps = null;
 
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, alumno.getDni());
-            ps.setString(2, alumno.getApellido());
-            ps.setString(3, alumno.getNombre());
-            ps.setDate(4, Date.valueOf(alumno.getFechaNac()));
-            ps.setInt(5, alumno.getIdAlumno());
+            //ps.setInt(1, alumno.getDni());
+            ps.setString(1, alumno.getApellido()); // apellido
+            ps.setString(2, alumno.getNombre());   // nombre
+            ps.setDate(3, Date.valueOf(alumno.getFechaNac())); // fechaNacimiento
+            ps.setBoolean(4, alumno.isActivo());
+            ps.setInt(5, alumno.getDni());
 
             int exito = ps.executeUpdate();
 
@@ -178,6 +176,8 @@ public class AlumnoData {
 
             if (fila == 1) {
                 JOptionPane.showMessageDialog(null, "Se eliminó el alumno.");
+            } else {
+                JOptionPane.showMessageDialog(null, "El alumno no existe");
             }
             ps.close();
 
@@ -185,6 +185,7 @@ public class AlumnoData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno");
         }
     }
+
     public void eliminarAlumno(int id) {
         try {
             String sql = "DELETE FROM alumno WHERE idAlumno=?";
