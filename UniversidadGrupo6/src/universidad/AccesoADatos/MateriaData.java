@@ -56,7 +56,7 @@ public class MateriaData {
             if (rs.next()) {
                 materia = new Materia();
                 materia.setIdMateria(id);
-                materia.setNombre("nombre");
+                materia.setNombre(rs.getString("nombre"));
                 materia.setAnioMateria(rs.getInt("año"));
                 materia.setActivo(true);
             }else{
@@ -84,6 +84,8 @@ public class MateriaData {
             ps.setString(1, materia.getNombre());
             ps.setInt(2, materia.getAnioMateria());
             ps.setInt(3, materia.getIdMateria());
+            
+            ps.executeUpdate();
             
             int exito = ps.executeUpdate();
             

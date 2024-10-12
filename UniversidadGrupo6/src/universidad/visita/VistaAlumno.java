@@ -59,7 +59,7 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
         jRBinactivo = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jButton6 = new javax.swing.JButton();
+        ActualizarAlumno = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(68, 167, 132));
         setForeground(new java.awt.Color(0, 0, 0));
@@ -143,10 +143,10 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel6.setText("Fecha de Nacimiento:");
 
-        jButton6.setText("Actualizar");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        ActualizarAlumno.setText("Actualizar");
+        ActualizarAlumno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                ActualizarAlumnoActionPerformed(evt);
             }
         });
 
@@ -186,7 +186,7 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                                 .addGap(0, 0, Short.MAX_VALUE)
-                                                .addComponent(jButton6)
+                                                .addComponent(ActualizarAlumno)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(jBeliminar)
                                                 .addGap(18, 18, 18)
@@ -246,7 +246,7 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
                     .addComponent(jBeliminar)
                     .addComponent(jButton3)
                     .addComponent(jBsalir)
-                    .addComponent(jButton6))
+                    .addComponent(ActualizarAlumno))
                 .addGap(30, 30, 30))
         );
 
@@ -343,17 +343,18 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
          if (jRBactivo.isSelected())
          {
              seleccionado=true;
+             alumno = new Alumno(Integer.parseInt(jTFdocumento.getText()), jTFapellido.getText(), jTFnombre.getText(), localDate, seleccionado);
+            alumnosD.guardarAlumno(alumno);
+         } else if (!jRBactivo.isSelected() && !jRBinactivo.isSelected()){
+             JOptionPane.showMessageDialog(this, "Porfavor Seleccione un Estado","Error",JOptionPane.WARNING_MESSAGE);
          }
          
-            alumno = new Alumno(Integer.parseInt(jTFdocumento.getText()), jTFapellido.getText(), jTFnombre.getText(), localDate, seleccionado);
-            alumnosD.guardarAlumno(alumno);
-
         } else {
             JOptionPane.showMessageDialog(this, "Por favor complete los campos obligatorios ", "Atencion!", JOptionPane.WARNING_MESSAGE);
         }        // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void ActualizarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarAlumnoActionPerformed
         if (!chequeo()) {
 
             Date fechaSeleccionada = jDateChooser1.getDate();
@@ -390,7 +391,7 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Por favor complete los campos ", "Atencion!", JOptionPane.WARNING_MESSAGE);
         }    // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_ActualizarAlumnoActionPerformed
 
     private void jRBinactivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBinactivoActionPerformed
         // TODO add your handling code here:
@@ -416,13 +417,13 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ActualizarAlumno;
     private javax.swing.ButtonGroup BotonesGrupo;
     private javax.swing.JButton jBbuscar;
     private javax.swing.JButton jBeliminar;
     private javax.swing.JButton jBnuevo;
     private javax.swing.JButton jBsalir;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton6;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

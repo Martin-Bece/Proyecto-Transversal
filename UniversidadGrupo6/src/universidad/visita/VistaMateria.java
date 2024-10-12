@@ -5,6 +5,10 @@
  */
 package universidad.visita;
 
+import javax.swing.JOptionPane;
+import universidad.AccesoADatos.MateriaData;
+import universidad.Entidades.Materia;
+
 /**
  *
  * @author Mila
@@ -14,8 +18,13 @@ public class VistaMateria extends javax.swing.JInternalFrame {
     /**
      * Creates new form VistaMateria
      */
+    
+    MateriaData md;
+    Materia materia = null;
+    
     public VistaMateria() {
         initComponents();
+        md = new MateriaData();
     }
 
     /**
@@ -35,16 +44,16 @@ public class VistaMateria extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        tfCodigo = new javax.swing.JTextField();
+        tfAño = new javax.swing.JTextField();
+        tfNombre = new javax.swing.JTextField();
+        NuevoMateria = new javax.swing.JButton();
+        EliminarMateria = new javax.swing.JButton();
+        GuardarMateria = new javax.swing.JButton();
+        SalirMateria = new javax.swing.JButton();
+        BuscarMateria = new javax.swing.JButton();
+        EstadoActivo = new javax.swing.JRadioButton();
+        EstadoInactivo = new javax.swing.JRadioButton();
 
         setPreferredSize(new java.awt.Dimension(479, 412));
         setRequestFocusEnabled(false);
@@ -52,51 +61,60 @@ public class VistaMateria extends javax.swing.JInternalFrame {
         jPanel1.setBackground(new java.awt.Color(68, 167, 132));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Codigo");
+        jLabel1.setText("Codigo(id)");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Materia");
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Nombre");
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Estado");
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Año");
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-
-        jTextField2.setBackground(new java.awt.Color(255, 255, 255));
-
-        jTextField3.setBackground(new java.awt.Color(255, 255, 255));
-
-        jButton1.setText("Nuevo");
-
-        jButton2.setText("Eliminar");
-
-        jButton3.setText("Guardar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        NuevoMateria.setText("Nuevo");
+        NuevoMateria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                NuevoMateriaActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Salir");
+        EliminarMateria.setText("Eliminar");
+        EliminarMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EliminarMateriaActionPerformed(evt);
+            }
+        });
 
-        jButton5.setText("Buscar");
+        GuardarMateria.setText("Guardar");
+        GuardarMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GuardarMateriaActionPerformed(evt);
+            }
+        });
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("Activo");
+        SalirMateria.setText("Salir");
+        SalirMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SalirMateriaActionPerformed(evt);
+            }
+        });
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Inactivo");
+        BuscarMateria.setText("Buscar");
+        BuscarMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscarMateriaActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(EstadoActivo);
+        EstadoActivo.setText("Activo");
+
+        buttonGroup1.add(EstadoInactivo);
+        EstadoInactivo.setText("Inactivo");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -116,24 +134,24 @@ public class VistaMateria extends javax.swing.JInternalFrame {
                                 .addGap(70, 70, 70)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(68, 68, 68)
-                                        .addComponent(jButton5))
+                                        .addComponent(BuscarMateria))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jRadioButton1)
+                                        .addComponent(EstadoActivo)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jRadioButton2))
+                                        .addComponent(EstadoInactivo))
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING))))
+                                        .addComponent(tfAño, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                                        .addComponent(tfNombre, javax.swing.GroupLayout.Alignment.LEADING))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1)
+                                .addComponent(NuevoMateria)
                                 .addGap(28, 28, 28)
-                                .addComponent(jButton2)
+                                .addComponent(EliminarMateria)
                                 .addGap(28, 28, 28)
-                                .addComponent(jButton3)
+                                .addComponent(GuardarMateria)
                                 .addGap(32, 32, 32)
-                                .addComponent(jButton4))))
+                                .addComponent(SalirMateria))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(204, 204, 204)
                         .addComponent(jLabel2))
@@ -157,25 +175,25 @@ public class VistaMateria extends javax.swing.JInternalFrame {
                         .addComponent(jLabel3))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton5))
+                            .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BuscarMateria))
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
+                    .addComponent(EstadoActivo)
+                    .addComponent(EstadoInactivo))
                 .addGap(70, 70, 70)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(NuevoMateria)
+                    .addComponent(EliminarMateria)
+                    .addComponent(GuardarMateria)
+                    .addComponent(SalirMateria))
                 .addContainerGap(46, Short.MAX_VALUE))
         );
 
@@ -193,29 +211,131 @@ public class VistaMateria extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void GuardarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarMateriaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        
+            if (materia == null) {
+                
+                if (!chequeo()) {
+                    int codigo = Integer.parseInt(tfCodigo.getText());
+                    String nombre = tfNombre.getText();
+                    int Año = Integer.parseInt(tfAño.getText());
+
+                    boolean seleccionado = false;
+                    if (EstadoActivo.isSelected()) {
+                    seleccionado = true;
+                    Materia materiaa = new Materia(codigo, nombre, Año, seleccionado);
+                    md.GuardarMateria(materiaa);
+                    } else if (!EstadoActivo.isSelected() && !EstadoInactivo.isSelected()) {
+                    JOptionPane.showMessageDialog(this, "Porfavor Seleccione un Estado", "Error", JOptionPane.WARNING_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Por favor complete los campos obligatorios ", "Atencion!", JOptionPane.WARNING_MESSAGE);
+
+                }
+                
+            } else {
+                
+                int codigo = Integer.parseInt(tfCodigo.getText());
+                String nombre = tfNombre.getText();
+                int Año = Integer.parseInt(tfAño.getText());
+                boolean seleccionado = false;
+                    if (EstadoActivo.isSelected()) {
+                    seleccionado = true;
+                    }
+                
+                materia = new Materia (codigo, nombre, Año, seleccionado);
+                
+                md.modificarMateria(materia);
+            }   
+    }//GEN-LAST:event_GuardarMateriaActionPerformed
+
+    private void SalirMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirMateriaActionPerformed
+        // TODO add your handling code here:
+        
+        int repuesta = JOptionPane.showConfirmDialog(this, "Esta seguro de Salir ?", "Atencion", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        if (repuesta == 0) {
+            dispose();
+        }
+    }//GEN-LAST:event_SalirMateriaActionPerformed
+
+    private void NuevoMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevoMateriaActionPerformed
+        // TODO add your handling code here:
+        limpiarCampos();
+        materia = null;
+    }//GEN-LAST:event_NuevoMateriaActionPerformed
+
+    private void BuscarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarMateriaActionPerformed
+        // TODO add your handling code here:
+        
+        if (!tfCodigo.getText().isEmpty()) {
+            int Codigo = Integer.parseInt(tfCodigo.getText());
+            materia = md.buscarMateria(Codigo);
+
+            if (materia != null) {
+                tfAño.setText(materia.getAnioMateria() + "");
+                tfNombre.setText(materia.getNombre());
+
+                if (materia.isActivo()) {
+                    EstadoActivo.setSelected(true);
+                } else {
+                    EstadoInactivo.setSelected(true);
+                }
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Introduzca un codigo para buscar", "Campo Vacio", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_BuscarMateriaActionPerformed
+
+    private void EliminarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarMateriaActionPerformed
+        // TODO add your handling code here:
+        
+        if (!tfCodigo.getText().isEmpty()) {
+            int codigo = Integer.parseInt(tfCodigo.getText());
+            
+            md.eliminarMateria(codigo);
+            limpiarCampos();
+            materia = null;
+        }
+        
+    }//GEN-LAST:event_EliminarMateriaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BuscarMateria;
+    private javax.swing.JButton EliminarMateria;
+    private javax.swing.JRadioButton EstadoActivo;
+    private javax.swing.JRadioButton EstadoInactivo;
+    private javax.swing.JButton GuardarMateria;
+    private javax.swing.JButton NuevoMateria;
+    private javax.swing.JButton SalirMateria;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField tfAño;
+    private javax.swing.JTextField tfCodigo;
+    private javax.swing.JTextField tfNombre;
     // End of variables declaration//GEN-END:variables
+
+    public boolean chequeo() {
+
+        return (tfCodigo.getText().isEmpty() || tfNombre.getText().isEmpty() || tfAño.getText().isEmpty());
+    }
+
+    public void limpiarCampos() {
+        tfAño.setText("");
+        tfCodigo.setText("");
+        tfNombre.setText("");
+        EstadoActivo.setSelected(false);
+        EstadoInactivo.setSelected(false);
+    }
+    
 }
