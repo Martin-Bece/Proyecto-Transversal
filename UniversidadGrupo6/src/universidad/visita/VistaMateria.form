@@ -193,8 +193,14 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="tfCodigo">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfCodigoKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="tfA&#xf1;o">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfA&#xf1;oKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="tfNombre">
         </Component>

@@ -75,6 +75,18 @@ public class VistaMateria extends javax.swing.JInternalFrame {
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setText("Año");
 
+        tfCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfCodigoKeyTyped(evt);
+            }
+        });
+
+        tfAño.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfAñoKeyTyped(evt);
+            }
+        });
+
         NuevoMateria.setText("Nuevo");
         NuevoMateria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -302,6 +314,20 @@ public class VistaMateria extends javax.swing.JInternalFrame {
         }
         
     }//GEN-LAST:event_EliminarMateriaActionPerformed
+
+    private void tfCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfCodigoKeyTyped
+       char car = evt.getKeyChar();
+        if (!Character.isDigit(car)) {
+            evt.consume();
+        }      
+    }//GEN-LAST:event_tfCodigoKeyTyped
+
+    private void tfAñoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfAñoKeyTyped
+       char car = evt.getKeyChar();
+        if (!Character.isDigit(car)) {
+            evt.consume();
+        }    
+    }//GEN-LAST:event_tfAñoKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
