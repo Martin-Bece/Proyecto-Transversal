@@ -208,12 +208,18 @@
             <Property name="text" type="java.lang.String" value="Inscribir"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonInscribirActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="BotonAnular">
           <Properties>
             <Property name="text" type="java.lang.String" value="Anular Inscripcion"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonAnularActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="BotonSalir">
           <Properties>

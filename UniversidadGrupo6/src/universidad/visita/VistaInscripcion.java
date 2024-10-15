@@ -13,6 +13,7 @@ import universidad.AccesoADatos.AlumnoData;
 import universidad.AccesoADatos.InscripcionData;
 import universidad.AccesoADatos.MateriaData;
 import universidad.Entidades.Alumno;
+import universidad.Entidades.Inscripcion;
 import universidad.Entidades.Materia;
 
 /**
@@ -112,9 +113,19 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
 
         BotonInscribir.setText("Inscribir");
         BotonInscribir.setEnabled(false);
+        BotonInscribir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonInscribirActionPerformed(evt);
+            }
+        });
 
         BotonAnular.setText("Anular Inscripcion");
         BotonAnular.setEnabled(false);
+        BotonAnular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonAnularActionPerformed(evt);
+            }
+        });
 
         BotonSalir.setText("Salir");
         BotonSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -232,6 +243,50 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
             dispose();
         }
     }//GEN-LAST:event_BotonSalirActionPerformed
+
+    private void BotonInscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonInscribirActionPerformed
+        // TODO add your handling code here:
+        int fs = TablaInscripcion.getSelectedRow();
+        
+        if (fs != -1) {
+            
+            Alumno alu = (Alumno) ComboAlumnos.getSelectedItem();
+            
+            int idMateria = (Integer) TablaInscripcion.getValueAt(fs, 0);
+            String NombreMat =(String) TablaInscripcion.getValueAt(fs, 1);
+            int AñoMat = (Integer) TablaInscripcion.getValueAt(fs, 2);
+            
+            Materia mat = new Materia(idMateria,NombreMat,AñoMat, true);
+
+            Inscripcion i = new Inscripcion(alu,mat,0);
+            
+            id.guardarInscripcion(i);
+            
+            
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione una fila","Error al seleccionar",JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
+    }//GEN-LAST:event_BotonInscribirActionPerformed
+
+    private void BotonAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAnularActionPerformed
+        // TODO add your handling code here:
+        
+        int sr = TablaInscripcion.getSelectedRow();
+        
+        if (sr != -1) {
+            
+            int idMateria = (Integer) TablaInscripcion.getValueAt(sr, 0);
+            Alumno alu = (Alumno) ComboAlumnos.getSelectedItem();
+            
+            id.borrarInscripcion(alu.getIdAlumno(),idMateria);
+            
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione una fila","Error al seleccionar",JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_BotonAnularActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
