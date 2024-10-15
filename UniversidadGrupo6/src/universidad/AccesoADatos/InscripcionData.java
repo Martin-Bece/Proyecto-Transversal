@@ -114,39 +114,35 @@ public class InscripcionData {
         return inscripciones;
     }
     
-    public List<Materia> obtenerMateriasCursadas(int id){
-        ArrayList<Materia> materiasC = new ArrayList();
+    public List<Materia> obtenerMateriasCursadas(int id) {
+    ArrayList<Materia> materiasC = new ArrayList<>();
+    
+    String sql = "SELECT i.idMateria, m.nombre, m.año FROM inscripcion i " +
+                 "JOIN materia m ON i.idMateria = m.idMateria " +
+                 "WHERE i.idAlumno = ?";
+
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
         
-        String sql = "SELECT i.idMateria, m.nombre, m.año FROM inscripcion i " +
-                "JOIN materia m ON i.idMateria = m.idMateria " +
-                "WHERE i.idAlumno = ?";
-        
-        try {
+        while (rs.next()) {
+            Materia mat = new Materia();
+            mat.setIdMateria(rs.getInt("idMateria"));
+            mat.setNombre(rs.getString("nombre")); 
+            mat.setAnioMateria(rs.getInt("año"));
+            mat.setActivo(true);
             
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            
-            while(rs.next()){
-                
-                Materia mat = new Materia();
-                mat.setIdMateria(rs.getInt("idMateria"));
-                mat.setNombre(rs.getString("nombre"));
-                mat.setAnioMateria(rs.getInt("año"));
-                mat.setActivo(true);
-                
-                materiasC.add(mat);
-            }
-            
-            ps.close();
-            
-        } catch (SQLException ex) {
-            
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla inscripcion");
-            ex.getMessage();
+            materiasC.add(mat);
         }
         
-        return materiasC;
+        ps.close();
+        
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla inscripcion: " + ex.getMessage());
+    }
+    
+    return materiasC;
     }
     
     public List<Materia>obtenerMateriasNOCursadas(int id){

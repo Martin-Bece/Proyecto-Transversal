@@ -286,7 +286,7 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
     
     private void CargarInscriptas(){
         Alumno aluSel = (Alumno)ComboAlumnos.getSelectedItem();
-        List<Materia> inscriptas = id.obtenerMateriasCursadas(1);
+        List<Materia> inscriptas = id.obtenerMateriasCursadas(aluSel.getIdAlumno());
         
         for (Materia aux : inscriptas) {
             model.addRow(new Object[] {aux.getIdMateria(),aux.getNombre(),aux.getAnioMateria()});
