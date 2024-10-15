@@ -41,6 +41,7 @@ public class InscripcionData {
             if (rs.next()) {
                 ins.setIdInscripcion(rs.getInt(1));
                 JOptionPane.showMessageDialog(null, "Inscrpcion Realizada");
+               
             }
             
             ps.close();

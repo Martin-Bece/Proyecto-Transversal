@@ -261,7 +261,7 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
             Inscripcion i = new Inscripcion(alu,mat,0);
             
             id.guardarInscripcion(i);
-            
+            borrarFilas();
             
         } else {
             JOptionPane.showMessageDialog(this, "Seleccione una fila","Error al seleccionar",JOptionPane.ERROR_MESSAGE);

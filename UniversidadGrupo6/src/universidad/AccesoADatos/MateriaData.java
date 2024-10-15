@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import universidad.Entidades.Materia;
 
@@ -21,20 +19,22 @@ public class MateriaData {
     }
     
     public void GuardarMateria(Materia materia){
+    
+        
         String sql = "INSERT INTO materia (nombre, año, estado) VALUES (?, ?, ?)";
         
         try{
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, materia.getNombre());
-            ps.setInt(2, materia.getAnioMateria());
-            ps.setBoolean(3, materia.isActivo());
-            ps.executeUpdate();
-            ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                materia.setIdMateria(rs.getInt(1));
+            PreparedStatement ps1 = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps1.setString(1, materia.getNombre());
+            ps1.setInt(2, materia.getAnioMateria());
+            ps1.setBoolean(3, materia.isActivo());
+            ps1.executeUpdate();
+            ResultSet rs1 = ps1.getGeneratedKeys();
+            if (rs1.next()) {
+                materia.setIdMateria(rs1.getInt(1));
                 JOptionPane.showMessageDialog(null, "Materia agregada con exito");
             }
-            ps.close();
+            ps1.close();
             
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Materia"+ex.getMessage());
