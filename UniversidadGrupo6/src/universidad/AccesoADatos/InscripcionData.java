@@ -54,7 +54,7 @@ public class InscripcionData {
     public List<Inscripcion> obtenerInscripciones(){
         ArrayList<Inscripcion> inscripciones = new ArrayList();
         
-        String sql = "SELECT * FROM inscripciones";
+        String sql = "SELECT * FROM inscripcion";
         
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -85,7 +85,7 @@ public class InscripcionData {
     public List<Inscripcion> obtenerInscripcionesPorAlumno(int id){
         ArrayList<Inscripcion> inscripciones = new ArrayList();
         
-        String sql = "SELECT * FROM inscripciones WHERE idAlumno = ?";
+        String sql = "SELECT * FROM inscripcion WHERE idAlumno = ?";
         
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -206,7 +206,7 @@ public class InscripcionData {
         String sql = "UPDATE inscripcion SET nota = ? WHERE idAlumno = ? AND idMateria = ?";
         
         try {
-            PreparedStatement ps = con.prepareCall(sql);
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setDouble(1, nota);
             ps.setInt(2, idAlumno);
             ps.setInt(3, idMateria);
@@ -220,7 +220,7 @@ public class InscripcionData {
             ps.close();
             
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al conectarse con la tabla inscripcion");
+            JOptionPane.showMessageDialog(null, "Error al conectarse con la tabla inscripcion"+ ex.getMessage());
         }
         
     }
